@@ -28,3 +28,9 @@ var target = document.querySelector('#pop001')
 if (target && getComputedStyle(target).display === "none") {
      // 로직 추가
 }
+
+
+
+
+## 참고 URL 
+getComputedstyle : https://helloinyong.tistory.com/284
