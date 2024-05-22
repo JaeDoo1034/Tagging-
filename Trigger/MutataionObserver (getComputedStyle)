@@ -1,0 +1,30 @@
+# Observer에 대한 기록 
+
+1. 바텀 시트 노출
+
+1) style 속성만 감지
+ > getComputedStyle을 사용하여 공통으로 정의된 css 존재 여부 확인
+var targetNode = document.querySelector('#pop001');
+
+const callback = function(mutationsList,observer) {
+     if (targetNode && getComputedStyle(targetNode).display === 'block') {
+          console.log('실행!!');
+          // 로직 추가
+     }
+};
+
+const observer = new MutationObserver(callback);
+var config = {
+     attributeFilter : ['style']
+};
+
+observer.observe(targetNode, config);
+
+
+2) 특정 상태 바라보고 감지
+ > 특정 요소 클릭 시 그 상태를 바라보며 노출 실행
+var target = document.querySelector('#pop001')
+
+if (target && getComputedStyle(target).display === "none") {
+     // 로직 추가
+}
