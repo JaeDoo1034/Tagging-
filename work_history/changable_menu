@@ -1,0 +1,20 @@
+# 롤링 메뉴에 대하여 observer 부착 후 날짜 변화 감지
+1. 롤링메뉴에 직접 observer 부착
+let target = document.querySelector('li.chw_widget_item > div > a');
+
+const callback = (mutationList, observer) => {
+    if (target && getComputedStyle(target).display != 'none'){
+        // 로직 처리
+        console.log(mutationList);
+    }
+}
+
+const start = new MutationObserver(callback);
+
+const config = {
+    attributes : true,
+    attributeFilter : ['style']
+}
+
+start.observe(target,config)
+
