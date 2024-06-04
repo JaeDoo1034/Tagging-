@@ -1,0 +1,31 @@
+## intersection observer 사용기
+
+1. 바텀시트 등장에 대하여 표준화 작업을 위함
+
+2. mutation observer을 사용하지 않는 이유
+  > 공통파일을 많이 호출하는 페이지의 경우, mutationobserver가 감지하는 요소가 많아져 성능 이슈 생길 가능성 존재 (페이지마다 특징이 다름)
+  > style 속성 변화만을 감지하도록 설정하였음에도 변화 감지 대상이 급격하게 많아짐
+
+3. 소스 파일
+ > 원래 name이라는 변수를 외부 스코프에 정의 후 사용했으나,
+   클로저 개념으로 인해 메모리 누수 현상 발생 가능성 존재.
+   따라서 콜백함수에서 target의 test_tag를 가져와 로직 실행.
+
+var target = document.querySelectorAll('[test_tag]');
+var options = {
+	root: null,
+  	threshold: 0.2
+};
+var callback = (entry, observer) => {
+      // 로직 처리
+      if (entry[0].target.getAttribute('test_tag') && entry[0].isIntersecting){
+          Newfunction('XXXXXX',{"XXXXXX" : entry[0].getAttribute('test_tag')});
+          }
+      };
+var io = new IntersectionObserver(callback,options);
+if(target){
+  target.forEach(node => {
+      io.observe(node)});
+};
+  
+   
