@@ -1,0 +1,27 @@
+(function() {
+    const originalOpen = XMLHttpRequest.prototype.open;
+    const originalSend = XMLHttpRequest.prototype.send;
+
+    XMLHttpRequest.prototype.open = function(method, url, async, user, password) {
+        this._url = url; // 요청 URL을 저장
+        return originalOpen.apply(this, arguments);
+    };
+
+    XMLHttpRequest.prototype.send = function(body) {
+        this.addEventListener('load', function() {
+            if (this.readyState === 4 && this.status === 200) {
+                console.log('AJAX 요청 완료:', this._url);
+                console.log('응답 데이터:', this.responseText);
+                // 여기서 필요한 작업 수행
+                handleAjaxResponse(this._url, this.responseText);
+            }
+        });
+        return originalSend.apply(this, arguments);
+    };
+
+    function handleAjaxResponse(url, responseText) {
+        // AJAX 응답 처리
+        console.log('AJAX 응답 처리:', url);
+        Ntm.Event.fireUserDefined('test')
+    }
+})();
